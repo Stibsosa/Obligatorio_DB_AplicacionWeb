@@ -23,8 +23,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxsaXN0YXJGdW5jaW9uYXJpb3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/Registro.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZWdpc3Ryby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Shared/Error.cshtml]

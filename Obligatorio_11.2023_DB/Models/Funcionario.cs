@@ -9,10 +9,10 @@
         public string direccion { get; set; }
         public int Telefono { get; set; }
         public string email { get; set; }
-        public string LogId { get; set; }
+        public int LogId { get; set; }
 
         public Funcionario() { }
-        public Funcionario(int ci, string nombre, string apellido, DateTime fecha_Nac, string direccion, int telefono, string email, string logId)
+        public Funcionario(int ci, string nombre, string apellido, DateTime fecha_Nac, string direccion, int telefono, string email, int logId)
         {
             this.Ci = ci;
             this.nombre = nombre;
