@@ -38,6 +38,8 @@ public class MySqlConnectionHelper
     //    }
     //}
 
+
+    //Insertar funcionario
     public int InsertFuncionario(Funcionario funcionario)
     {
         string pw = funcionario.nombre + "." + funcionario.apellido;
@@ -48,6 +50,7 @@ public class MySqlConnectionHelper
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
+                //abre conexion
                 connection.Open();
 
                
@@ -55,7 +58,7 @@ public class MySqlConnectionHelper
 
                 using (MySqlCommand command1 = new MySqlCommand(sql, connection))
                 {
-                    string fechaFormateada = (funcionario.fecha_nacimiento).ToString("dd-MM-yyyy");
+                    string fechaFormateada = (funcionario.fecha_nacimiento).ToString("yyyy-MM-dd");
 
                     command1.Parameters.AddWithValue("@Ci", funcionario.Ci);
                     command1.Parameters.AddWithValue("@nombre", funcionario.nombre);
@@ -82,6 +85,7 @@ public class MySqlConnectionHelper
         }
     }
 
+    //Busca funcionario por CI
     public Funcionario GetFuncionarioporCi(int Ci)
     {
         using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -96,6 +100,7 @@ public class MySqlConnectionHelper
         }
     }
 
+    //Setea atributos de un funcionario
     public int ActualizarFuncionario(Funcionario funcionario)
     {
         try
@@ -109,7 +114,7 @@ public class MySqlConnectionHelper
 
                 using (MySqlCommand command = new MySqlCommand(sql, connection))
                 {
-                    string fechaFormateada = (funcionario.fecha_nacimiento).ToString("dd-MM-yyyy");
+                    string fechaFormateada = (funcionario.fecha_nacimiento).ToString("yyyy-MM-dd");
 
                     command.Parameters.AddWithValue("@Ci", funcionario.Ci);
                     command.Parameters.AddWithValue("@nombre", funcionario.nombre);
@@ -135,6 +140,8 @@ public class MySqlConnectionHelper
             throw new Exception(e.Message);
         }
     }
+
+    //Inserta registro en tabla Logins (se pretende una insersión inicial a la de funcionarios para ya generar un LogId - Foreing Key en tabla Funcionarios)
     public int InsertLogIn(Funcionario funcionario)
     {
         try
@@ -167,6 +174,7 @@ public class MySqlConnectionHelper
         }
     }
 
+    //Devuelve registro de Logins (tabla) si la persona tiene uno
     public Logins GetLogId(int LogId, string Pwd)
     {
         try
@@ -187,5 +195,89 @@ public class MySqlConnectionHelper
             throw new Exception(e.Message);
         }
     }
+
+    public bool esAdministrador(int LogId)
+    {
+        try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string sql = "select * from Administradores where LogId = " + LogId;
+
+                // Trae si es administrador
+                Administradores administrador = connection.Query<Administradores>(sql).FirstOrDefault();
+                if (administrador != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+
+    public PeriodoActualizacion periodoActualizacion()
+    {
+        try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string sql = "select * from Periodos_Actualizacion";
+
+                // Trae si es administrador
+                PeriodoActualizacion periodo = connection.Query<PeriodoActualizacion>(sql).FirstOrDefault();
+
+                return periodo;
+            }
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+
+    public int ActualizarPeriodo(PeriodoActualizacion periodo_a_actualizar)
+    {
+        try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string sql = "update Periodos_Actualizacion SET Year = @Year, Semestre = @Semestre, Fch_Inicio = @fecha_inicio, Fch_Fin = @fecha_fin";
+
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    string fechaIniFormateada = (periodo_a_actualizar.Fch_Inicio).ToString("yyyy-MM-dd");
+                    string fechaFinFormateada = (periodo_a_actualizar.Fch_Fin).ToString("yyyy-MM-dd");
+
+                    command.Parameters.AddWithValue("@Year", periodo_a_actualizar.Year);
+                    command.Parameters.AddWithValue("@Semestre", periodo_a_actualizar.Semestre);
+                    command.Parameters.AddWithValue("@fecha_inicio", fechaIniFormateada);
+                    command.Parameters.AddWithValue("@fecha_fin", fechaFinFormateada);
+
+                    // Devuelve filas afectadas
+                    int filasAfectadas = command.ExecuteNonQuery();
+
+                    return filasAfectadas;
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+
 }
 

@@ -1,0 +1,38 @@
+﻿@model Obligatorio_11._2023_DB.Models.PeriodoActualizacion
+
+@{
+    ViewData["Title"] = "PeriodoActualizacion";
+}
+
+<h1>Periodo de Actualizacion</h1>
+
+<h4>PeriodoActualizacion</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="PeriodoActualizacion">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Year" class="control-label"></label>
+                <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Semestre" class="control-label"></label>
+                <input asp-for="Semestre" class="form-control" />
+                <span asp-validation-for="Semestre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

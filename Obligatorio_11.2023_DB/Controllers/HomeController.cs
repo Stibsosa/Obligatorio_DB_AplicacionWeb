@@ -16,7 +16,7 @@ namespace Obligatorio_11._2023_DB.Controllers
 
         public HomeController(ILogger<HomeController> logger)
         {
-            _logger = logger;        
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -32,7 +32,11 @@ namespace Obligatorio_11._2023_DB.Controllers
             return RedirectToAction("Login");
         }
 
-        
+        public IActionResult Bienvenido()
+        {
+            return View();
+        }
+
 
         //Listar Funcionarios
         public IActionResult listarFuncionarios()
@@ -52,6 +56,7 @@ namespace Obligatorio_11._2023_DB.Controllers
             return View(funcionarios);
         }
 
+        //Login de usuarios
         public IActionResult Login()
         {
             return View();
@@ -66,7 +71,16 @@ namespace Obligatorio_11._2023_DB.Controllers
                 Logins logins = sqlConnectionHelper.GetLogId(logs.LogId, logs.Password);
                 if (logins != null)
                 {
-                    return RedirectToAction("listarFuncionarios"); //Cambiar pantalla a redirigir
+                    HttpContext.Session.SetInt32("Usuario", logs.LogId); //declara ingreso de usuario valido y setea la ci como variable de entorno para el manejo de sesion
+
+                    bool esAdmin = sqlConnectionHelper.esAdministrador(logs.LogId);
+                    if (esAdmin == true)
+                    {
+                        HttpContext.Session.SetInt32("esAdministrador", logs.LogId); //declara ingreso de usuario valido y setea la ci como variable de entorno para el manejo de sesion
+                    }
+
+
+                    return RedirectToAction("Bienvenido"); //Cambiar pantalla a redirigir
                 }
                 else
                 {
@@ -85,6 +99,7 @@ namespace Obligatorio_11._2023_DB.Controllers
                 return View();
             }
         }
+        //Solapa de registro de usuarios cuando no existe en la tabla de funcionarios/logins
         public IActionResult Registro()
         {
             return View();
@@ -94,15 +109,66 @@ namespace Obligatorio_11._2023_DB.Controllers
         {
             try
             {
+                funcionario.LogId = funcionario.Ci;
                 MySqlConnectionHelper sqlConnectionHelper = new MySqlConnectionHelper(connectionString);
                 int nuevoIngreso = sqlConnectionHelper.InsertFuncionario(funcionario);
+                string mensaje = "El usuario fue ingresado con éxito, su contraseña por defecto es 'nombre.apellido'";
+                ViewBag.Mensaje = mensaje;
                 return View();
             }
             catch (Exception e)
             {
+                string mensaje = e.Message;
+                ViewBag.Mensaje = mensaje;
                 return View();
             }
-
         }
+
+        public IActionResult CerrarSesion()
+        {
+            HttpContext.Session.Clear();
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult PeriodoActualizacion()
+        {
+            MySqlConnectionHelper sqlConnectionHelper = new MySqlConnectionHelper(connectionString);
+            PeriodoActualizacion periodo = sqlConnectionHelper.periodoActualizacion();
+            return View(periodo);        
+        }
+        [HttpPost]
+        public IActionResult PeriodoActualizacion(PeriodoActualizacion periodo)
+        {
+            try
+            {
+                MySqlConnectionHelper sqlConnectionHelper = new MySqlConnectionHelper(connectionString);
+                int filasafectadas = sqlConnectionHelper.ActualizarPeriodo(periodo);
+                if (filasafectadas == 1)
+                {
+                    string mensaje = "Se abrió un nuevo período de actualización de formularios";
+                    ViewBag.Mensaje = mensaje;
+                }
+                else
+                {
+                    string mensaje = "No hubo modificación para el período autorizado";
+                    ViewBag.Mensaje = mensaje;
+                }
+                return View();
+            }
+            catch (Exception e)
+            {
+                string mensaje = e.Message;
+                ViewBag.Mensaje = mensaje;
+                return View();
+            }
+        }
+        public IActionResult Formulario()
+        {
+            return View();
+        }
+        
+
+
     }
 }
