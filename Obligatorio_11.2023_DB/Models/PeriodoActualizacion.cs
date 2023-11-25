@@ -4,8 +4,8 @@
     {
         public int Year { get; set; }
         public int Semestre { get; set; }
-        public DateOnly Fch_Inicio { get; set; }
-        public DateOnly Fch_Fin { get; set; }
+        public DateTime Fch_Inicio { get; set; }
+        public DateTime Fch_Fin { get; set; }
 
         public PeriodoActualizacion() { }
     }

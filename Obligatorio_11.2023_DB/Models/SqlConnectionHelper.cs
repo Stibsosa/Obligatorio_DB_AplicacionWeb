@@ -279,5 +279,138 @@ public class MySqlConnectionHelper
         }
     }
 
+    public bool estaEnFecha()
+    {
+        try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string sql = "select * from Periodos_Actualizacion";
+
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    // Trae funcionario por CI
+                    PeriodoActualizacion periodoActual = connection.Query<PeriodoActualizacion>(sql).FirstOrDefault();
+                    DateTime fechaInicio = periodoActual.Fch_Inicio;
+                    DateTime fechaFin = periodoActual.Fch_Fin;
+
+                    // Fecha específica que quieres validar
+                    DateTime fechaHoy = DateTime.Today;
+
+                    // Verificar si la fecha está dentro del rango
+                    if (fechaHoy >= fechaInicio && fechaHoy <= fechaFin)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+
+    public CarneSalud obtenerCarneSalud(int cedula)
+    {
+        try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string sql = "select * from Carnet_Salud where Ci = " + cedula;
+
+
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    // Trae funcionario por CI
+                    CarneSalud carne = connection.Query<CarneSalud>(sql).FirstOrDefault();
+                    return carne;
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+
+    public int ActualizarCarne(CarneSalud carne)
+    {
+        try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string sql = "update Carnet_Salud SET Fch_Emision = @Fch_Emision, Fch_Vencimiento = @Fch_Vencimiento, Comprobante = @Comprobante where Ci = @Ci";
+
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    string fechaEmision = (carne.Fch_Emision).ToString("yyyy-MM-dd");
+                    string fechaVencimiento = (carne.Fch_Vencimiento).ToString("yyyy-MM-dd");
+
+                    command.Parameters.AddWithValue("@Ci", carne.Ci);
+                    command.Parameters.AddWithValue("@Fch_Emision", fechaEmision);
+                    command.Parameters.AddWithValue("@Fch_Vencimiento", fechaVencimiento);
+                    command.Parameters.AddWithValue("@Comprobante", carne.Comprobante);
+
+                    // Devuelve filas afectadas
+                    int filasAfectadas = command.ExecuteNonQuery();
+
+                    return filasAfectadas;
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+
+    public int cargarCarneSalud(CarneSalud carne)
+    {
+        try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string sql = "insert into Carnet_Salud (Ci,Fch_Emision,Fch_Vencimiento,Comprobante) VALUES (@Ci,@Fch_Emision,@Fch_Vencimiento,@Comprobante)";
+
+
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    string fechaEmision = (carne.Fch_Emision).ToString("yyyy-MM-dd");
+                    string fechaVencimiento = (carne.Fch_Vencimiento).ToString("yyyy-MM-dd");
+
+                    command.Parameters.AddWithValue("@Ci", carne.Ci);
+                    command.Parameters.AddWithValue("@Fch_Emision", fechaEmision);
+                    command.Parameters.AddWithValue("@Fch_Vencimiento", fechaVencimiento);
+                    command.Parameters.AddWithValue("@Comprobante", carne.Comprobante);
+
+                    // Devuelve filas afectadas
+                    int filasAfectadas = command.ExecuteNonQuery();
+
+                    return filasAfectadas;
+                }
+
+
+            }
+
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+
 }
 

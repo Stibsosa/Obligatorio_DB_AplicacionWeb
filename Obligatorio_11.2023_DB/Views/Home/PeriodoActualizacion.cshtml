@@ -6,6 +6,11 @@
 
 <h1>Periodo de Actualizacion</h1>
 
+    @if (ViewBag.Mensaje != null)
+    {
+        <p>Mensaje: @ViewBag.Mensaje</p>
+    }
+
 <h4>PeriodoActualizacion</h4>
 <hr />
 <div class="row">
@@ -23,14 +28,21 @@
                 <span asp-validation-for="Semestre" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Fch_Inicio" class="control-label"></label>
+                <input type="date" asp-for="Fch_Inicio" class="form-control" />
+                <span asp-validation-for="Fch_Inicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fch_Fin" class="control-label"></label>
+                <input type="date" asp-for="Fch_Fin" class="form-control" />
+                <span asp-validation-for="Fch_Fin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

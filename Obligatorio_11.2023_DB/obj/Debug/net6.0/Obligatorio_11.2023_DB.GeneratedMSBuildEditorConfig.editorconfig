@@ -15,8 +15,16 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\STIBS\Desktop\Bases de Datos\Obligatorio_11.2023_DB\Obligatorio_11.2023_DB
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/ActualizaCarne.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBY3R1YWxpemFDYXJuZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/Bienvenido.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxCaWVudmVuaWRvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/CrearCarne.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDcmVhckNhcm5lLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/Index.cshtml]

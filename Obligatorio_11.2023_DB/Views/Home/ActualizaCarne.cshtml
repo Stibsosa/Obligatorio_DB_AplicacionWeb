@@ -1,0 +1,53 @@
+﻿@model Obligatorio_11._2023_DB.Models.CarneSalud
+
+@{
+    int usuario = Context.Session.GetInt32("Usuario").GetValueOrDefault();
+    ViewData["Title"] = "ActualizaCarne";
+}
+
+<h1>Actualizar Carne</h1>
+    @if (ViewBag.Mensaje != null)
+    {
+        <p>Mensaje: @ViewBag.Mensaje</p>
+    }
+<h4>CarneSalud</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ActualizaCarne" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Ci" class="control-label" hidden ></label>
+                <input asp-for="Ci" class="form-control" value = "@usuario" hidden/>
+                <span asp-validation-for="Ci" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fch_Emision" class="control-label"></label>
+                <input type="date" asp-for="Fch_Emision" class="form-control" />
+                <span asp-validation-for="Fch_Emision" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fch_Vencimiento" class="control-label"></label>
+                <input type="date" asp-for="Fch_Vencimiento" class="form-control" />
+                <span asp-validation-for="Fch_Vencimiento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comprobante" class="control-label"></label>
+                <input type="file" asp-for="Comprobante" class="form-control" id="foto" name="Foto" accept=".jpg, .jpeg, .png">
+                <label>Acepta imagenes jpg, jpeg y png</label>
+                <span asp-validation-for="Comprobante" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

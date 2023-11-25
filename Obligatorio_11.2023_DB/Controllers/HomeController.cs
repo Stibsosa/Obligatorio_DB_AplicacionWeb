@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Data;
+using Microsoft.AspNetCore.Http;
 
 namespace Obligatorio_11._2023_DB.Controllers
 {
@@ -34,6 +35,7 @@ namespace Obligatorio_11._2023_DB.Controllers
 
         public IActionResult Bienvenido()
         {
+            ViewBag.Mensaje = TempData["Mensaje"];
             return View();
         }
 
@@ -135,7 +137,7 @@ namespace Obligatorio_11._2023_DB.Controllers
         {
             MySqlConnectionHelper sqlConnectionHelper = new MySqlConnectionHelper(connectionString);
             PeriodoActualizacion periodo = sqlConnectionHelper.periodoActualizacion();
-            return View(periodo);        
+            return View(periodo);
         }
         [HttpPost]
         public IActionResult PeriodoActualizacion(PeriodoActualizacion periodo)
@@ -163,12 +165,109 @@ namespace Obligatorio_11._2023_DB.Controllers
                 return View();
             }
         }
-        public IActionResult Formulario()
+        public IActionResult Formulario() //Formulario de aquellos que no cargaron el carne de salud
+        {
+            int usuario = HttpContext.Session.GetInt32("Usuario").GetValueOrDefault();
+
+            try
+            {
+                MySqlConnectionHelper sqlConnectionHelper = new MySqlConnectionHelper(connectionString);
+                CarneSalud carne = sqlConnectionHelper.obtenerCarneSalud(usuario);
+                bool estaEnFecha = sqlConnectionHelper.estaEnFecha();
+                if (carne != null && estaEnFecha)
+                {
+                    return RedirectToAction("ActualizaCarne");//la persona ya ha cargado carné por lo tanto solo lo va a actualizar
+                }
+                else if (carne == null && estaEnFecha)
+                {
+                    return RedirectToAction("CrearCarne");
+                }
+                else
+                {
+                    TempData["Mensaje"] = "No se encuentra en período de actualización, intente luego";
+                    return RedirectToAction("Bienvenido");
+                }
+            }
+            catch (Exception e)
+            {
+                TempData["Mensaje"] = e.Message;
+                return RedirectToAction("Bienvenido");
+            }
+        }
+
+        public IActionResult ActualizaCarne()
+        {
+            MySqlConnectionHelper sqlConnectionHelper = new MySqlConnectionHelper(connectionString);
+            CarneSalud carne = sqlConnectionHelper.obtenerCarneSalud(HttpContext.Session.GetInt32("Usuario").GetValueOrDefault());
+            return View(carne);
+        }
+        [HttpPost]
+        public IActionResult ActualizaCarne(CarneSalud carne, IFormFile foto)
+        {
+            try
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    foto.CopyTo(ms);
+                    carne.Comprobante = ms.ToArray();
+                }
+                MySqlConnectionHelper sqlConnectionHelper = new MySqlConnectionHelper(connectionString);
+                int filasafectadas = sqlConnectionHelper.ActualizarCarne(carne);
+                if (filasafectadas == 1)
+                {
+                    string mensaje = "Gracias por actualizar su carné";
+                    ViewBag.Mensaje = mensaje;
+                }
+                else
+                {
+                    string mensaje = "No hubo modificaciones en su registro";
+                    ViewBag.Mensaje = mensaje;
+                }
+                return View();
+            }
+            catch (Exception e)
+            {
+                string mensaje = e.Message;
+                ViewBag.Mensaje = mensaje;
+                return View();
+            }
+        }
+        public IActionResult CrearCarne()
         {
             return View();
         }
-        
+        [HttpPost]
+        public IActionResult CrearCarne(CarneSalud carne, IFormFile foto)
+        {
 
+            try
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    foto.CopyTo(ms);
+                    carne.Comprobante = ms.ToArray();
+                } 
 
+                MySqlConnectionHelper sqlConnectionHelper = new MySqlConnectionHelper(connectionString);
+                int filasafectadas = sqlConnectionHelper.cargarCarneSalud(carne);
+                if (filasafectadas == 1)
+                {
+                    string mensaje = "Gracias por registrar su carné";
+                    ViewBag.Mensaje = mensaje;
+                }
+                else
+                {
+                    string mensaje = "Por favor registre su carné";
+                    ViewBag.Mensaje = mensaje;
+                }
+                return View();
+            }
+            catch (Exception e)
+            {
+                string mensaje = e.Message;
+                ViewBag.Mensaje = mensaje;
+                return View();
+            }
+        }
     }
 }
