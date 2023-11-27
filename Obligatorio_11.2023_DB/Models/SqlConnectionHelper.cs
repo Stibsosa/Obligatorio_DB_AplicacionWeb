@@ -401,14 +401,141 @@ public class MySqlConnectionHelper
 
                     return filasAfectadas;
                 }
-
-
             }
-
         }
         catch (Exception e)
         {
             throw new Exception(e.Message);
+        }
+    }
+
+    public List<Funcionario> DetalleFuncionario(int id)
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            connection.Open();
+
+            string sql = "select * from Funcionarios where Ci = "+ id;
+
+            List<Funcionario> resultados = connection.Query<Funcionario>(sql).AsList();
+            return resultados;
+
+        }
+    }
+    public int EliminarFuncionario(int id)
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            connection.Open();
+
+            string sql = "delete from Logins where LogId = " + id;
+
+            using (MySqlCommand command = new MySqlCommand(sql, connection))
+            {
+                command.Parameters.AddWithValue("@Ci", id);
+                int filasafectadas = command.ExecuteNonQuery();
+                return filasafectadas;
+            }
+        }
+    }
+
+    public List<CarneVencido> CarneVencido()
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            connection.Open();
+
+            string sql = "select cs.Fch_Vencimiento, f.Ci,f.nombre,f.apellido, f.Telefono, f.email, f.direccion from Funcionarios f join Carnet_Salud cs on f.Ci = cs.Ci where cs.Fch_Vencimiento < NOW()";
+
+            List<CarneVencido> resultados = connection.Query<CarneVencido>(sql).AsList();
+            return resultados;
+
+        }
+    }
+
+    public List<Reservas_Disponibles> FechasClinica()
+    {
+        try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string sql = "select * from Reservas_Disponibles";
+
+                // Trae si es administrador
+                List<Reservas_Disponibles> fchDisponible = connection.Query<Reservas_Disponibles>(sql).AsList();
+
+                return fchDisponible;
+            }
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+    public int ActualizarFechasClinica(Reservas_Disponibles fechaDisponible)
+    {
+        try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string sql = "insert into Reservas_Disponibles (Fch_Disponible) values (@Fch_Disponible)";
+
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    string fechaFormateada = (fechaDisponible.Fch_Disponible).ToString("yyyy-MM-dd HH:mm:ss");
+
+                    command.Parameters.AddWithValue("@Fch_Disponible", fechaFormateada);
+
+                    // Devuelve filas afectadas
+                    int filasAfectadas = command.ExecuteNonQuery();
+
+                    return filasAfectadas;
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+    public int ReservarFecha(Reservas_Disponibles reserva, int ci)
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            connection.Open();
+
+            string sql1 = "insert into Reservas_Clinica (Ci,Id,Fch_Reserva) values (@Ci,@Id,@Fch_Disponible)";
+            string sql2 = "delete from Reservas_Disponibles where Id = @Id";
+
+            using (MySqlCommand command = new MySqlCommand(sql1, connection))
+            {
+                string fechaFormateada = (reserva.Fch_Disponible).ToString("yyyy-MM-dd HH:mm:ss");
+
+                command.Parameters.AddWithValue("@Ci", ci);
+                command.Parameters.AddWithValue("@Id", reserva.Id);
+                command.Parameters.AddWithValue("@Fch_Disponible", fechaFormateada);
+
+                int filasafectadas1 = command.ExecuteNonQuery();
+
+                if (filasafectadas1 > 0)
+                {
+                    using (MySqlCommand command2 = new MySqlCommand(sql2, connection))
+                    {
+                        command2.Parameters.AddWithValue("@Id", reserva.Id);
+
+                        int filasAfectadas2 = command2.ExecuteNonQuery();
+                        return filasAfectadas2;
+                    }
+                }
+                else
+                {
+                    return 0;
+                }
+            }
         }
     }
 
