@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Obligatorio_11._2023_DB.Models.Reservas_Disponibles>
+
+@{
+    ViewData["Title"] = "FechasClinicaUsuario";
+}
+
+<h1>Reservas de Hora</h1>
+    @if (ViewBag.Mensaje != null)
+    {
+        <p>Mensaje: @ViewBag.Mensaje</p>
+    }
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Fch_Disponible)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fch_Disponible)
+            </td>
+            <td>
+                @Html.ActionLink("Reservar", "ReservarFecha", new { id=item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<Obligatorio_11._2023_DB.Models.Funcionario>
 
 @{
-    ViewData["Title"] = "listarFuncionarios";
+    ViewData["Title"] = "DetalleFuncionario";
 }
 
-<h1>Lista de Funcionarios</h1>
-    @if (ViewBag.Mensaje != null)
-    {
-        <p>Mensaje: @ViewBag.Mensaje</p>
-    }
+<h1>Detalle de Funcionario</h1>
+
 <p>
     <a asp-controller="Home" asp-action="Registro">Crear Nuevo Funcionario</a>
 </p>
@@ -24,7 +21,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.apellido)
             </th>
-@*            <th>
+            <th>
                 @Html.DisplayNameFor(model => model.fecha_nacimiento)
             </th>
             <th>
@@ -38,7 +35,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LogId)
-            </th>*@
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -55,7 +52,7 @@
                 @Html.DisplayFor(modelItem => item.apellido)
             </td>
             <td>
-@*                @Html.DisplayFor(modelItem => item.fecha_nacimiento)
+                @Html.DisplayFor(modelItem => item.fecha_nacimiento)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.direccion)
@@ -68,12 +65,10 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LogId)
-            </td>*@
+            </td>
             
             <td>
-                @Html.ActionLink("Editar", "Edit", new { id=item.Ci }) |
-                @Html.ActionLink("Detalle", "DetalleFuncionario", new { id=item.Ci }) |
-                @Html.ActionLink("Eliminar", "EliminarFuncionario", new { id=item.Ci })
+                @Html.ActionLink("Editar", "Edit", new { id=item.Ci })
             </td>
         </tr>
 }

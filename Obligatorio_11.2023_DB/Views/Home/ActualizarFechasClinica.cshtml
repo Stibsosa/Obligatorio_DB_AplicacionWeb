@@ -1,0 +1,41 @@
+﻿@model Obligatorio_11._2023_DB.Models.Reservas_Disponibles
+
+@{
+    ViewData["Title"] = "ActualizarFechasClinica";
+}
+
+<h1>ActualizarFechasClinica</h1>
+    @if (ViewBag.Mensaje != null)
+    {
+        <p>Mensaje: @ViewBag.Mensaje</p>
+    }
+<h4>Reservas_Disponibles</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ActualizarFechasClinica">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"hidden></label>
+                <input asp-for="Id" class="form-control"value="0"hidden />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fch_Disponible" class="control-label"></label>
+                <input asp-for="Fch_Disponible" class="form-control" />
+                <span asp-validation-for="Fch_Disponible" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

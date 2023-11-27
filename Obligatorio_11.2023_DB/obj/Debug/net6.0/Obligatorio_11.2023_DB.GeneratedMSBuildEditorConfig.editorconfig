@@ -15,6 +15,38 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\STIBS\Desktop\Bases de Datos\Obligatorio_11.2023_DB\Obligatorio_11.2023_DB
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/ActualizaCarne.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBY3R1YWxpemFDYXJuZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/ActualizarFechasClinica.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBY3R1YWxpemFyRmVjaGFzQ2xpbmljYS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/Bienvenido.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxCaWVudmVuaWRvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/CarneVencidos.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDYXJuZVZlbmNpZG9zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/CrearCarne.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDcmVhckNhcm5lLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/DetalleFuncionario.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEZXRhbGxlRnVuY2lvbmFyaW8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/FechasClinica.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGZWNoYXNDbGluaWNhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/FechasClinicaUsuario.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGZWNoYXNDbGluaWNhVXN1YXJpby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -25,6 +57,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/PeriodoActualizacion.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQZXJpb2RvQWN0dWFsaXphY2lvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/STIBS/Desktop/Bases de Datos/Obligatorio_11.2023_DB/Obligatorio_11.2023_DB/Views/Home/Privacy.cshtml]
