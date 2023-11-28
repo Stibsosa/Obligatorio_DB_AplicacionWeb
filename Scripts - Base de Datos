@@ -49,12 +49,6 @@ CREATE TABLE Administradores (
         ON DELETE CASCADE
 );
 
-#TABLA SUGERIDA EN EL OBLIGATORIO QUE SE CAMBIO POR TABLA "Reservas_Clinica" (NO SE USA)
-CREATE TABLE Agenda(
-    Nro INTEGER not null,
-    Ci INTEGER not null,
-    Fch_Agenda VARCHAR(200) not null
-);
 
 #REGISTRA LOS CARNÉ DE SALUD DE LOS FUNCIONARIOS
 CREATE TABLE Carnet_Salud(
@@ -74,15 +68,16 @@ CREATE TABLE Reservas_Disponibles (
     Id INT AUTO_INCREMENT PRIMARY KEY,
     Fch_Disponible DATETIME NOT NULL
 );
+ALTER TABLE Reservas_Disponibles
+ADD COLUMN Ocupada bool DEFAULT false;
 
-
-#Tabla de horarios reservados por los usuarios/funcionarios (debía ser Agenda pero en la implementación se cambió)
-CREATE TABLE Reservas_Clinica(
+#Tabla Agenda 
+CREATE TABLE Agenda(
     Ci INT not null,
     Id INT NOT NULL,
     Fch_Reserva DATETIME not null,
     PRIMARY KEY (Ci),
-    CONSTRAINT fk_Reservas_Clinica_Ci
+    CONSTRAINT fk_Agenda_Ci
         FOREIGN KEY (Ci)
         REFERENCES Logins(LogId)
         ON DELETE CASCADE
