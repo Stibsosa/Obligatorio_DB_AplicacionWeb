@@ -1,5 +1,6 @@
 # Obligatorio_DB_AplicacionWeb
 Obligatorio Bases de datos. Segundo semestre 2023
+Stib Sosa - Juan Gonzalez - Santiago Rodriguez
 
 PROYECTO EN VISUAL STUDIO TIPO "Aplicación web de ASP.NET Core (Modelo-Vista-Controlador). Es posible que se tengan que instalar pluggins para la aceptación de este proyecto en VS. 
 
