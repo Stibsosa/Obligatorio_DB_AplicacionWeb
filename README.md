@@ -1,6 +1,8 @@
 # Obligatorio_DB_AplicacionWeb
 Obligatorio Bases de datos. Segundo semestre 2023
 
+PROYECTO EN VISUAL STUDIO TIPO "Aplicación web de ASP.NET Core (Modelo-Vista-Controlador). Es posible que se tengan que instalar pluggins para la aceptación de este proyecto en VS. 
+
 CONFIGURACIÓN DE LA BASE DE DATOS
 La configuración se basa en 3 partes. 
   1. Archivo Dockerfile en el repositorio obligarorio_11.2023_DB el cual configura la aceptación de contenedores en Docker
@@ -8,7 +10,7 @@ La configuración se basa en 3 partes.
   3. La clase sqlConnectionHelper.cs es el nexo entre la base de datos y el proyecto de backend.
 
 LOGICA DEL PROGRAMA
-La implementación puede ir por dos flujos, la del usuario Administrador registrado en la tabla "Administradores" (debe haber administradores registrados a través de la base de datos para poder acceder a todas las funcionalidades. El segundo flujo, más acotado es el de el usuario común. 
+La implementación puede ir por dos flujos, la del usuario Administrador registrado en la tabla "Administradores" (debe haber usuarios administradores registrados a través de la base de datos "insert into Administradores (@Ci) values (@Ci)" para poder acceder a todas las funcionalidades de este tipo de usuario). El segundo flujo, más acotado es el de el usuario común. 
 
 La generación de funcionarios se realiza primeramente por la generación de un registro en la tabla Logins (Id correspondiente a la CI de la persona [PK]). Este último campo mencionado corresponde también a las FK de las tablas Funcionarios, Administradores, Carnet_Salud y Agenda. Por lo tanto, sin ingreso en la tabla Logins el resto de tablas arrojará un error por falta de asociación PK y FK.
 
