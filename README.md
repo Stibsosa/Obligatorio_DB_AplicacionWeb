@@ -4,6 +4,15 @@ Stib Sosa - Juan Gonzalez - Santiago Rodriguez
 
 PROYECTO EN VISUAL STUDIO TIPO "Aplicación web de ASP.NET Core (Modelo-Vista-Controlador). Es posible que se tengan que instalar pluggins para la aceptación de este proyecto en VS. 
 
+Obligatorio_11.2023_DB
+    Controllers ==> Se encuentra la clase HomeController.cs la cual se encarga de la logica principal
+    Models
+        Clases ==> Clases genericas basadas en las tablas de la DB
+        SqlConnectionHelper.cs ==> Se encarga de mantener los métodos que consultan directamente sobre la DB y devuelve los resultados para las pantallas
+    Views ==>Vistas/Pantallas creadas sobre HomeController.cs
+      Shared ==>Layout.cshtml contiene el control de pantallas para usuario Admin y usuario sin privilegios
+    Dockerfile ==> Configuración para conexión a docker donde se encuentra la DB
+
 CONFIGURACIÓN DE LA BASE DE DATOS
 La configuración se basa en 3 partes. 
   1. Archivo Dockerfile en el repositorio obligarorio_11.2023_DB el cual configura la aceptación de contenedores en Docker
