@@ -12,6 +12,7 @@ namespace Obligatorio_11._2023_DB.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        //String de conexión a DB
         string connectionString = "Server=localhost;Port=3306;Database=obligatorio;User ID=root;Password=bernardo";
 
 
@@ -40,7 +41,7 @@ namespace Obligatorio_11._2023_DB.Controllers
         }
 
 
-        //Listar Funcionarios
+        //Listar Funcionarios (solo para los usuarios Administradores)
         public IActionResult listarFuncionarios(string mensaje)
         {
             if (!string.IsNullOrEmpty(mensaje))
@@ -58,7 +59,6 @@ namespace Obligatorio_11._2023_DB.Controllers
             MySqlConnectionHelper sqlConnectionHelper = new MySqlConnectionHelper(connectionString);
             List<Funcionario> funcionarios = sqlConnectionHelper.GetFuncionarios();
 
-            // Puedes hacer algo con la lista de funcionarios, como pasarla a la vista
             return View(funcionarios);
         }
 
@@ -184,11 +184,11 @@ namespace Obligatorio_11._2023_DB.Controllers
                 }
                 else if (carne == null && estaEnFecha)
                 {
-                    return RedirectToAction("CrearCarne");
+                    return RedirectToAction("CrearCarne"); //crea carné de salud porque nunca cargó ninguno
                 }
                 else
                 {
-                    TempData["Mensaje"] = "No se encuentra en período de actualización, intente luego";
+                    TempData["Mensaje"] = "No se encuentra en período de actualización, intente luego"; //no habilita carga/actulización porque no se encuentra en el período correspondiente
                     return RedirectToAction("Bienvenido");
                 }
             }
@@ -199,6 +199,7 @@ namespace Obligatorio_11._2023_DB.Controllers
             }
         }
 
+        //RedirectToAction de método Formulario para actulización de carné de salud
         public IActionResult ActualizaCarne()
         {
             MySqlConnectionHelper sqlConnectionHelper = new MySqlConnectionHelper(connectionString);
@@ -236,6 +237,8 @@ namespace Obligatorio_11._2023_DB.Controllers
                 return View();
             }
         }
+
+        //RedirectToAction de método Formulario para creación de carné de salud
         public IActionResult CrearCarne()
         {
             return View();
@@ -274,6 +277,7 @@ namespace Obligatorio_11._2023_DB.Controllers
             }
         }
 
+        //Lista carné de salud vencidos
         public IActionResult CarneVencidos()
         {
             MySqlConnectionHelper sqlConnectionHelper = new MySqlConnectionHelper(connectionString);
@@ -292,6 +296,8 @@ namespace Obligatorio_11._2023_DB.Controllers
         //}
 
 
+
+        //Botón "Detalle" en listarFuncionarios
         public IActionResult DetalleFuncionario(int id)
         {
             MySqlConnectionHelper sqlConnectionHelper = new MySqlConnectionHelper(connectionString);
@@ -299,6 +305,7 @@ namespace Obligatorio_11._2023_DB.Controllers
             return View(funcionarios);
         }
 
+        //Botón "Detalle" en listarFuncionarios
         public IActionResult EliminarFuncionario(int id)
         {
             try
@@ -325,6 +332,7 @@ namespace Obligatorio_11._2023_DB.Controllers
             }
         }
 
+        //Vista de fechas disponibles para la clínica del lado del administrador
         public IActionResult FechasClinica()
         {
             MySqlConnectionHelper sqlConnectionHelper = new MySqlConnectionHelper(connectionString);
@@ -332,6 +340,7 @@ namespace Obligatorio_11._2023_DB.Controllers
             return View(fechasDisp);
         }
 
+        //Vista de fechas disponibles para clínica del lado del usuario sin privilegios
         public IActionResult FechasClinicaUsuario(string mensaje) //Vista de Fechas disponibles para Usuarios nada más
         {
             if (!string.IsNullOrEmpty(mensaje))
@@ -343,6 +352,7 @@ namespace Obligatorio_11._2023_DB.Controllers
             return View(fechasDisp);
         }
 
+        //Reservar fecha disponible para clínica (botón)
         public IActionResult ReservarFecha(Reservas_Disponibles reserva)
         {
             int usuario = HttpContext.Session.GetInt32("Usuario").GetValueOrDefault();
@@ -371,6 +381,7 @@ namespace Obligatorio_11._2023_DB.Controllers
             }
         }
 
+        //carga de nuevas fechas disponible para la clínica UCU por el Administrador
         public IActionResult ActualizarFechasClinica()
         {
             return View();
@@ -400,6 +411,30 @@ namespace Obligatorio_11._2023_DB.Controllers
                 ViewBag.Mensaje = mensaje;
                 return View();
             }
+        }
+
+        //Listar Agenda (solo para los usuarios Administradores)
+        public IActionResult listarAgenda(string mensaje)
+        {
+            if (!string.IsNullOrEmpty(mensaje))
+            {
+                ViewBag.Mensaje = mensaje;
+            }
+            MySqlConnectionHelper sqlConnectionHelper = new MySqlConnectionHelper(connectionString);
+            List<Agenda> funcionarios = sqlConnectionHelper.GetAgenda();
+            return View(funcionarios);
+        }
+        public IActionResult listarAgendaUsuario(string mensaje)
+        {
+            int usuario = HttpContext.Session.GetInt32("Usuario").GetValueOrDefault();
+
+            if (!string.IsNullOrEmpty(mensaje))
+            {
+                ViewBag.Mensaje = mensaje;
+            }
+            MySqlConnectionHelper sqlConnectionHelper = new MySqlConnectionHelper(connectionString);
+            List<Agenda> funcionarios = sqlConnectionHelper.GetAgendaUsuario(usuario);
+            return View(funcionarios);
         }
 
     }

@@ -5,6 +5,8 @@
         public int Id { get; set; }
         public DateTime Fch_Disponible { get; set; }
 
+        public bool Ocupada { get; set; }
+
         public Reservas_Disponibles() { }
     }
 }

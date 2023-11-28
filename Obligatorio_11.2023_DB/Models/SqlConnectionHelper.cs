@@ -13,7 +13,8 @@ public class MySqlConnectionHelper
         this.connectionString = connectionString;
     }
 
-    public List<Funcionario> GetFuncionarios()
+    //Lista los funcionarios en la solapa habilitada solamente para el usuario Administrador
+    public List<Funcionario> GetFuncionarios() 
     {
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
@@ -39,7 +40,7 @@ public class MySqlConnectionHelper
     //}
 
 
-    //Insertar funcionario
+    //Insertar funcionario 
     public int InsertFuncionario(Funcionario funcionario)
     {
         string pw = funcionario.nombre + "." + funcionario.apellido;
@@ -461,7 +462,7 @@ public class MySqlConnectionHelper
             {
                 connection.Open();
 
-                string sql = "select * from Reservas_Disponibles";
+                string sql = "select * from Reservas_Disponibles where Ocupada = false";
 
                 // Trae si es administrador
                 List<Reservas_Disponibles> fchDisponible = connection.Query<Reservas_Disponibles>(sql).AsList();
@@ -508,8 +509,8 @@ public class MySqlConnectionHelper
         {
             connection.Open();
 
-            string sql1 = "insert into Reservas_Clinica (Ci,Id,Fch_Reserva) values (@Ci,@Id,@Fch_Disponible)";
-            string sql2 = "delete from Reservas_Disponibles where Id = @Id";
+            string sql1 = "insert into Agenda (Ci,Id,Fch_Reserva) values (@Ci,@Id,@Fch_Reserva)";
+            string sql2 = "update Reservas_Disponibles set Ocupada = true where Id = @Id";
 
             using (MySqlCommand command = new MySqlCommand(sql1, connection))
             {
@@ -517,7 +518,7 @@ public class MySqlConnectionHelper
 
                 command.Parameters.AddWithValue("@Ci", ci);
                 command.Parameters.AddWithValue("@Id", reserva.Id);
-                command.Parameters.AddWithValue("@Fch_Disponible", fechaFormateada);
+                command.Parameters.AddWithValue("@Fch_Reserva", fechaFormateada);
 
                 int filasafectadas1 = command.ExecuteNonQuery();
 
@@ -536,6 +537,33 @@ public class MySqlConnectionHelper
                     return 0;
                 }
             }
+        }
+    }
+    public List<Agenda> GetAgenda()
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            connection.Open();
+
+            string sql = "select * from Agenda";
+
+            // Utilizar Dapper para mapear los resultados a objetos
+            List<Agenda> resultados = connection.Query<Agenda>(sql).AsList();
+            return resultados;
+        }
+    }
+
+    public List<Agenda> GetAgendaUsuario(int usuario)
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            connection.Open();
+
+            string sql = "select * from Agenda where Ci = " + usuario;
+
+            // Utilizar Dapper para mapear los resultados a objetos
+            List<Agenda> resultados = connection.Query<Agenda>(sql).AsList();
+            return resultados;
         }
     }
 

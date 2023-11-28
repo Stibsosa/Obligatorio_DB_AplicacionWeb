@@ -25,7 +25,7 @@
                 @Html.DisplayFor(modelItem => item.Fch_Disponible)
             </td>
             <td>
-                @Html.ActionLink("Reservar", "ReservarFecha", new { id=item.Id })
+                @Html.ActionLink("Reservar", "ReservarFecha", new { id=item.Id,Fch_Disponible = item.Fch_Disponible })
             </td>
         </tr>
 }
