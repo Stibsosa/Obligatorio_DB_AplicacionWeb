@@ -424,6 +424,8 @@ namespace Obligatorio_11._2023_DB.Controllers
             List<Agenda> funcionarios = sqlConnectionHelper.GetAgenda();
             return View(funcionarios);
         }
+
+        //Listar Agenda reservada para todos los usuarios
         public IActionResult listarAgendaUsuario(string mensaje)
         {
             int usuario = HttpContext.Session.GetInt32("Usuario").GetValueOrDefault();
