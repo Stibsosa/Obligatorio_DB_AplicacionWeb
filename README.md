@@ -25,11 +25,13 @@ SOLAPAS HABILITADAS PARA CADA USUARIO
     4.  Fechas Clínica: Lista las fechas disponibles que cargó el usuario administrador para habilitarla a los funcionarios (si se toma la fecha, se borra de la lista). Va directamente ligada a la tabla "Reservas_Disponibles". Hablita el botón "Agregar Fecha Disponible" para que el usuario Admin cargue nuevas. 
     5.  Mantenimiento Formulario: Formulario de carga/actualización de carné de salud para funcionarios. Carga archivos JPG, JPEG y PNG pequeños.
     6.  Reservas: Corresponde a la tabla Agenda. Habilita opcion de reservar fecha y hora para clínica según la preferencia del funcionario. Solo deja reservar una fecha por funcionario. 
-    7.  Cerrar Sesion:  Cierra la sesión de la persona logueada.
+    7.  Mi Agenda: Lista la agenda reservada del usuario logueado.
+    8.  Cerrar Sesion:  Cierra la sesión de la persona logueada.
   
   USUARIO SIN PRIVILEGIOS
     1.  Mantenimiento Formulario: idem Administrador.
     2.  Reservas: idem Administrador.
     3.  Cerrar Sesión: idem Administrador.
+    4.  Mi Agenda: idem Administrador.
 
 
