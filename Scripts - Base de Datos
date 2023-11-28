@@ -1,0 +1,92 @@
+#INICIO
+CREATE DATABASE obligatorio;
+USE obligatorio;
+
+#Generación de tabla Logins
+CREATE TABLE Logins (
+    LogId INT NOT NULL,
+    Password VARCHAR(200) NOT NULL,
+    PRIMARY KEY (LogId)
+);
+
+#Generación de tabla Funcionarios
+CREATE TABLE Funcionarios (
+    Ci INT NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
+    apellido VARCHAR(50) NOT NULL,
+    fecha_nacimiento VARCHAR(50) NOT NULL,
+    direccion VARCHAR(50) NOT NULL,
+    Telefono INT NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    LogId INT NOT NULL,
+    PRIMARY KEY (Ci),
+    CONSTRAINT fk_Logins_LogId
+        FOREIGN KEY (LogId)
+        REFERENCES Logins(LogId)
+        ON DELETE CASCADE
+);
+
+#Alter Funcionarios
+alter table Funcionarios modify fecha_nacimiento DATE;
+commit;
+
+alter table Funcionarios
+    add constraint Funcionarios_Ci_pk
+        primary key (Ci);
+
+alter table Funcionarios
+    add constraint Funcionarios_LogId_fk
+        foreign key (LogId) references Logins (LogId);
+#####
+
+#Nueva tabla para nivel de usuarios (administradores/comunes)
+CREATE TABLE Administradores (
+    LogId INT NOT NULL,
+    PRIMARY KEY (LogId),
+    CONSTRAINT fk_Administradores_LogId
+        FOREIGN KEY (LogId)
+        REFERENCES Logins(LogId)
+        ON DELETE CASCADE
+);
+
+
+#REGISTRA LOS CARNÉ DE SALUD DE LOS FUNCIONARIOS
+CREATE TABLE Carnet_Salud(
+    Ci INT not null,
+    Fch_Emision DATE not null,
+    Fch_Vencimiento Date not null,
+    Comprobante blob not null, #Link a imagen/PATH
+    PRIMARY KEY (Ci),
+    CONSTRAINT fk_Carnet_Salud_LogId
+        FOREIGN KEY (Ci)
+        REFERENCES Logins(LogId)
+        ON DELETE CASCADE
+);
+
+#Tabla Fechas disponibles para reservas de clinica
+CREATE TABLE Reservas_Disponibles (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Fch_Disponible DATETIME NOT NULL
+);
+ALTER TABLE Reservas_Disponibles
+ADD COLUMN Ocupada bool DEFAULT false;
+
+#Tabla Agenda 
+CREATE TABLE Agenda(
+    Ci INT not null,
+    Id INT NOT NULL,
+    Fch_Reserva DATETIME not null,
+    PRIMARY KEY (Ci),
+    CONSTRAINT fk_Agenda_Ci
+        FOREIGN KEY (Ci)
+        REFERENCES Logins(LogId)
+        ON DELETE CASCADE
+);
+
+#Creación de tabla de los períodos de actualización del carné de salud, el cual habilita el usuario administrador.
+CREATE TABLE Periodos_Actualizacion(
+    Year int not null,
+    Semestre int not null,
+    Fch_Inicio DATE not null,
+    Fch_Fin DATE not null
+);
